@@ -2,10 +2,11 @@ import { Media } from '../Media'
 import Scanner from './Scanner';
 
 export class RedGifsScanner extends Scanner {
-  scan = async (): Promise<Media[]> => {
+  scan = async (html: string): Promise<Media[]> => {
     const token = await this.getToken();
     const promises: JQuery.jqXHR<any>[] = []
-    $('a.tile.isVideo').each((i, e) => {
+    console.log($(html).find('a.tile.isVideo'))
+    $(html).find('a.tile.isVideo').each((i, e) => {
       const url = e.getAttribute('href')
       if (!url) return;
       

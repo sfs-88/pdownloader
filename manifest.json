@@ -3,11 +3,8 @@
   "name": "pdownloader",
   "description": "Downloads media detected on adult websites",
   "version": "0.0.1",
-  "action": {
-    "default_title": "pdownloader"
-  },
-  "background": {
-    "service_worker": "dist/background.js"
+  "side_panel": {
+    "default_path": "dist/downloader.html"
   },
   "web_accessible_resources": [
     {
@@ -15,13 +12,10 @@
       "matches": ["https://api.redgifs.com/*"]
     }
   ],
-  "content_scripts": [
-    {
-      "js": ["dist/main.js"],
-      "matches": ["https://www.redgifs.com/*"]
-    }
+  "host_permissions": [
+    "*://*/"
   ],
-  "permissions": ["activeTab", "tabs", "storage", "scripting"],
+  "permissions": ["activeTab", "tabs", "sidePanel", "scripting"],
   "icons": {
     "16": "dist/images/icon.png",
     "48": "dist/images/icon.png",

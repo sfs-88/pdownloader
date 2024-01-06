@@ -1,14 +1,11 @@
-const path = require('path');
-const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: 'production',
   entry: {
-    main: './src/script/main.ts',
-    downloader: './src/script/downloader.ts',
-    background: './src/script/background.ts',
+    downloader: './src/script/downloader.ts'
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -41,19 +38,6 @@ module.exports = {
           },
         ],
       },
-    ],
-  },
-  optimization: {
-    minimizer: [
-      new TerserPlugin({
-        parallel: true,
-        terserOptions: {
-          ecma: 6,
-          output: { 
-            ascii_only: true 
-          },
-        },
-      })
     ],
   },
 };

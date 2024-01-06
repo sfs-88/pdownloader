@@ -1,16 +1,29 @@
 import JsFileDownloader from 'js-file-downloader'
 import { Media } from './Media'
 import { Task } from './Task'
+import Scanner from './scanners/Scanner'
+import { RedGifsScanner } from './scanners/RedGifsScanner'
 
 const tasks: Task[] = []
 
 $(async () => {
-  const values = await chrome.storage.local.get('media')
-  const savedMedia: Media[] = values['media']
-  if (!savedMedia) return
+  const tabs = await chrome.tabs.query({ active: true, currentWindow: true })
+  const activeTab = tabs[0]
+  if (!activeTab?.id) return
 
+  const results = await chrome.scripting.executeScript({
+    target: { tabId: activeTab.id },
+    injectImmediately: true,
+    func: getHtml
+  })
+
+  const html = results[0].result
+  const scanner = getScanner(activeTab.url)
+  if (!html || !scanner) return
+  
+  const media = await scanner.scan(html)
   const container = $('.media-container')
-  savedMedia.forEach(m => {
+  media.forEach(m => {
     const row = getMediaRow(m)
     tasks.push(new Task(m, m.filename, row))
 
@@ -23,6 +36,25 @@ $(async () => {
   $('#uncheckAll').on('click', () => checkAll(false))
   $('#checkBatch').on('click', () => checkNext(50))
 })
+
+const getHtml = (selector?: string) => {
+  let element: Element | null
+  if (selector) {
+    element = document.querySelector(selector)
+  } else {
+    element = document.documentElement
+  }
+
+  if (!element) return
+
+  return element.outerHTML;
+}
+
+const getScanner = (url?: string): Scanner | undefined => {
+  if (url?.indexOf('redgifs.com') ?? -1 > -1) {
+    return new RedGifsScanner()
+  }
+}
 
 const downloadChecked = async () => {
   const downloadTasks = tasks.filter(t => t.download)
@@ -50,7 +82,7 @@ const taskComplete = (task: Task) => {
   task.element.remove()
   const index = tasks.indexOf(task);
   if (index > -1) {
-    tasks.splice(index, 1);
+    tasks.splice(index, 1)
   }
 }
 
