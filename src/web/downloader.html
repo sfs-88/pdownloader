@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/dist/downloader.js"></script>
+        <link href="/dist/style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <table class="media-container">
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    <button class="button-3" id="downloadChecked">Download (0)</button>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    <input type="checkbox" id="includeTags" name="includeTags">
+                    <label for="includeTags">Include tags</label>
+                    <div style="margin-top:10px">
+                        <button class="button-4" id="checkAll">Check all</button>
+                        <button class="button-4" id="checkBatch">Check next 50</button>
+                        &nbsp;|&nbsp;&nbsp;<button class="button-4" id="uncheckAll">Uncheck all</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
