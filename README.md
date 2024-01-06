@@ -6,6 +6,12 @@ If tags were detected, they can be included in the filename by checking the "Inc
 
 <img src="images/screenshot.png" height="500">
 
+## Installation
+
+1. Download the [latest release](https://github.com/sfs-88/pdownloader/releases)
+1. Extract the contents anywhere (e.g. C:/pdownloader)
+1. Load the [unpacked extension](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
+
 ## RedGifs
 
 Due to RedGifs infinite scrolling, only the _loaded_ media will be detected. Scroll the page to the desired media count before opening the side panel. The extension uses a [temporary token](https://github.com/Redgifs/api/wiki/Temporary-tokens) to load media details, which includes rate limiting. If you have issues detecting a large number of media, please load a smaller number and run the extension multiple times.
